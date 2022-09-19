@@ -27,9 +27,9 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet("getdepartments")]
-    public async Task<IEnumerable<DepartmentResponse>> GetDepartments([FromQuery] string parentDepartment)
+    public async Task<IEnumerable<DepartmentResponse>> GetDepartments([FromQuery] string parentDepartment, [FromQuery] int pageNumber = 1)
     {
-        var result = await _departmentService.GetDepartments(parentDepartment);
+        var result = await _departmentService.GetDepartments(parentDepartment, pageNumber);
         if (!result.Any())
             return Enumerable.Empty<DepartmentResponse>();
         return result.Select(d => new DepartmentResponse(d));

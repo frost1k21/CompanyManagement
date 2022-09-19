@@ -17,9 +17,9 @@ public class PositionController : ControllerBase
     }
     
     [HttpGet("getpositions")]
-    public async Task<IEnumerable<Position>> GetPositions()
+    public async Task<IEnumerable<Position>> GetPositions([FromQuery] int pageNumber = 1)
     {
-        return await _positionService.GetPositions();
+        return await _positionService.GetPositions(pageNumber);
     }
 
     [HttpGet("{id}")]

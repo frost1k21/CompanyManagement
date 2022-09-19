@@ -14,9 +14,17 @@ public class PositionService : IPositionService
         _dataContext = dataContext;
     }
     
-    public async Task<List<Position>> GetPositions()
+    public async Task<List<Position>> GetPositions(int pageNumber)
     {
-        return await _dataContext.Positions.ToListAsync();
+        var itemsPerPage = 10;
+        if (pageNumber < 0)
+            pageNumber = 1;
+        var skipItems = (pageNumber - 1) * itemsPerPage;
+        return await _dataContext.Positions
+            .OrderBy(p => p.Title)
+            .Skip(skipItems)
+            .Take(itemsPerPage)
+            .ToListAsync();
     }
 
     public async Task<Position> GetPositionById(int id)
