@@ -14,25 +14,15 @@ public class EmployeeService : IEmployeeService
         _dataContext = dataContext;
     }
     
-    public async Task<List<Employee>> GetEmployees(string fullName, int pageNumber)
+    public async Task<List<Employee>> GetEmployees(string fullName)
     {
-        var itemsPerPage = 10;
-        if (pageNumber < 0)
-            pageNumber = 1;
-        var skipItems = (pageNumber - 1) * itemsPerPage;
         if (string.IsNullOrEmpty(fullName))
             return await _dataContext.Employees
-                .OrderBy(p => p.Id)
-                .Skip(skipItems)
-                .Take(itemsPerPage)
                 .Include(p=> p.Position)
                 .Include(p => p.Department)
                 .ToListAsync();
         return await _dataContext.Employees
             .Where(e => EF.Functions.ILike(e.FullName, fullName))
-            .OrderBy(p => p.Id)
-            .Skip(skipItems)
-            .Take(itemsPerPage)
             .Include(e => e.Position)
             .Include(p => p.Department)
             .ToListAsync();

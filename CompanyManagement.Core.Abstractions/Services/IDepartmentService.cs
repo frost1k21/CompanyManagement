@@ -4,7 +4,7 @@ namespace CompanyManagement.Core.Abstractions.Services;
 
 public interface IDepartmentService
 {
-    public Task<IEnumerable<Department>> GetDepartments(string parentDepartmentTitle, int pageNumber);
+    public Task<IEnumerable<Department>> GetDepartments(string parentDepartmentTitle);
     public Task SaveDepartments(List<Department> departments);
     public Task<Department> GetDepartmentById(int id);
     public Task<Department> GetDepartmentByTitle(string title);

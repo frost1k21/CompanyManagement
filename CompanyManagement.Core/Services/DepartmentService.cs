@@ -14,19 +14,11 @@ public class DepartmentService : IDepartmentService
         _dataContext = dataContext;
     }
 
-    public async Task<IEnumerable<Department>> GetDepartments(string parentDepartmentTitle, int pageNumber)
+    public async Task<IEnumerable<Department>> GetDepartments(string parentDepartmentTitle)
     {
-        var itemsPerPage = 10;
-        if (pageNumber < 0)
-            pageNumber = 1;
-        var skipItems = (pageNumber - 1) * itemsPerPage;
-
         if (string.IsNullOrEmpty(parentDepartmentTitle))
         {
             return await _dataContext.Departments
-                .OrderBy(d => d.Title)
-                .Skip(skipItems)
-                .Take(itemsPerPage)
                 .Include(d => d.Employees)
                 .ThenInclude(e => e.Position)
                 .ToListAsync();
@@ -38,9 +30,6 @@ public class DepartmentService : IDepartmentService
         
         return await _dataContext.Departments
             .Where(d => d.HeadDepartment == parentDepartment)
-            .OrderBy(d => d.Title)
-                .Skip(skipItems)
-                .Take(itemsPerPage)
             .Include(d => d.Employees)
             .ThenInclude(e => e.Position)
             .ToListAsync();

@@ -25,9 +25,9 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("getemployees")]
-    public async Task<IEnumerable<EmployeeResponse>> GetEmployees([FromQuery] string fullName, [FromQuery] int pageNumber = 1)
+    public async Task<IEnumerable<EmployeeResponse>> GetEmployees([FromQuery] string fullName)
     {
-        var employees = await _employeeService.GetEmployees(fullName, pageNumber);
+        var employees = await _employeeService.GetEmployees(fullName);
         return employees.Select(e => new EmployeeResponse(e));
     }
 
