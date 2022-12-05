@@ -1,4 +1,4 @@
-# CompanyManagement test app
+# CompanyManagement test app (тестовое задание)
 
 ## Для запуска нужно, чтобы было установлены `ef tools`.
 
